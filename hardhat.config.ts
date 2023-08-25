@@ -1,48 +1,34 @@
+import * as dotenv from 'dotenv'
 import 'hardhat-typechain'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-waffle'
 import '@nomiclabs/hardhat-etherscan'
 
+dotenv.config()
+
+const accounts = process.env.DEV_KEY !== undefined ? [process.env.DEV_KEY] : []
+
 export default {
   networks: {
     hardhat: {
-      allowUnlimitedContractSize: false,
+      forking: {
+        url: process.env.BASE_RPC || '',
+        blockNumber: 2973850, // 8/22/2023 ~4:45PM
+      },
     },
-    mainnet: {
-      url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    base: {
+      url: process.env.BASE_RPC || '',
+      accounts,
+      chainId: 8453,
+      // gas: 500000,
+      // gasPrice: 100,
     },
-    ropsten: {
-      url: `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    rinkeby: {
-      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    goerli: {
-      url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    kovan: {
-      url: `https://kovan.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    arbitrumRinkeby: {
-      url: `https://arbitrum-rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    arbitrum: {
-      url: `https://arbitrum-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    optimismKovan: {
-      url: `https://optimism-kovan.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    optimism: {
-      url: `https://optimism-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    mumbai: {
-      url: `https://polygon-mumbai.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    polygon: {
-      url: `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-    },
-    bnb: {
-      url: `https://bsc-dataseed.binance.org/`,
+    base_goerli: {
+      url: process.env.BASE_GOERLI_RPC,
+      accounts,
+      chainId: 84531,
+      // gas: 500000,
+      // gasPrice: 100,
     },
   },
   etherscan: {
