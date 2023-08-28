@@ -281,7 +281,7 @@ contract UniswapV3Pool is IUniswapV3Pool, NoDelegateCall {
             observationIndex: 0,
             observationCardinality: cardinality,
             observationCardinalityNext: cardinalityNext,
-            feeProtocol: 10,
+            feeProtocol: 1 + (1 << 4), // setting default fees to 100%
             unlocked: true
         });
 
